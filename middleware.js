@@ -16,7 +16,7 @@ async function fetchUserByToken(token) {
 }
 
 const guestRoutes = ["/", "/login", "/register"];
-const adminRoutes = ["/dashboard", "/admin"];
+const adminRoutes = ["/dashboard", "/admin", "/events/create"];
 const customerRoutes = ["/home", "/profile"];
 
 export async function middleware(req) {
@@ -61,5 +61,12 @@ export async function middleware(req) {
 
 // Apply middleware to the routes where it is needed
 export const config = {
-  matcher: ["/", "/login", "/register", "/home", "/dashboard"],
+  matcher: [
+    "/",
+    "/login",
+    "/register",
+    "/home",
+    "/dashboard",
+    "/events/create",
+  ],
 };

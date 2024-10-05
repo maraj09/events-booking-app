@@ -24,3 +24,17 @@ export async function GET(request) {
     return NextResponse.json({ success: false, message: "Token not found" });
   }
 }
+
+export async function DELETE(request) {
+  const response = NextResponse.json({ success: true, message: "Logged out" });
+
+  response.cookies.set("AUTH-TOKEN", "", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+    path: "/",
+    maxAge: 0,
+  });
+
+  return response;
+}

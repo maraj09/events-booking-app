@@ -5,7 +5,8 @@ import axios from "./axios";
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
-  const [user, setUser] = useState("asd");
+  const [user, setUser] = useState(null);
+  const [authToken, setAuthToken] = useState("");
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -16,6 +17,7 @@ const AppProvider = ({ children }) => {
             "Content-Type": "application/json",
           },
         });
+
         if (tokenResponse.ok) {
           const data = await tokenResponse.json();
           if (data.success) {
@@ -24,6 +26,8 @@ const AppProvider = ({ children }) => {
                 Authorization: `Bearer ${data.token.value}`,
               },
             });
+
+            setAuthToken(data.token.value);
             setUser(response.data);
           }
         }
@@ -36,7 +40,11 @@ const AppProvider = ({ children }) => {
     fetchUser();
   }, []);
 
-  return <AppContext.Provider value={{ user }}>{children}</AppContext.Provider>;
+  return (
+    <AppContext.Provider value={{ user, setUser, authToken, setAuthToken }}>
+      {children}
+    </AppContext.Provider>
+  );
 };
 export const useAppContext = () => {
   return useContext(AppContext);
