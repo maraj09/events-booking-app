@@ -18,5 +18,6 @@ npm install
 ```bash
 npm run dev
 ```
+* If need to change api endpoint go to app/axios/index.js and change the BASE_URL
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
