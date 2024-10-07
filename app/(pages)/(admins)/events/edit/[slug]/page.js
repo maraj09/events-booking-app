@@ -73,9 +73,10 @@ const EditEvent = ({ params }) => {
     data.append("start_date", formData.start_date);
     data.append("price", formData.price);
     data.append("seats", formData.seats);
+    data.append("_method", "put");
 
     try {
-      const response = await axios.post(`/api/events/${eventId}/update`, data, {
+      const response = await axios.post(`/api/events/${eventId}`, data, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${authToken}`, // Include token in Authorization header

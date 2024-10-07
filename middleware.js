@@ -17,7 +17,7 @@ async function fetchUserByToken(token) {
 
 const guestRoutes = ["/", "/login", "/register"];
 const adminRoutes = ["/dashboard", "/admin", "/events/create"];
-const customerRoutes = ["/home", "/profile"];
+const customerRoutes = ["/home", "/profile", "/bookings"];
 
 export async function middleware(req) {
   const token = req.cookies.get("AUTH-TOKEN")?.value;
@@ -32,10 +32,11 @@ export async function middleware(req) {
         return NextResponse.redirect(new URL("/home", req.url));
       }
 
-      if (
-        (role === "customer" && adminRoutes.includes(currentPath)) ||
-        currentPath.startsWith("/events/edit/")
-      ) {
+      if (role === "customer" && adminRoutes.includes(currentPath)) {
+        return NextResponse.redirect(new URL("/home", req.url));
+      }
+
+      if (role === "customer" && currentPath.startsWith('/events/edit/')) {
         return NextResponse.redirect(new URL("/home", req.url));
       }
 
@@ -71,6 +72,7 @@ export const config = {
     "/home",
     "/dashboard",
     "/events/create",
-    "/events/edit/:id*",
+    "/events/edit/:slug*",
+    "/bookings",
   ],
 };
